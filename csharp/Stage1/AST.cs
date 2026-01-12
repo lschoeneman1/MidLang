@@ -58,13 +58,26 @@ namespace MidLang.Stage1
     }
 
     /// <summary>
-    /// Print statement: print(expression);
+    /// Print statement: print(expression); (no newline)
     /// </summary>
     public class PrintStatement : Statement
     {
         public Expression Expression { get; }
 
         public PrintStatement(Expression expression)
+        {
+            Expression = expression;
+        }
+    }
+
+    /// <summary>
+    /// Print line statement: println(expression); (with newline)
+    /// </summary>
+    public class PrintLineStatement : Statement
+    {
+        public Expression Expression { get; }
+
+        public PrintLineStatement(Expression expression)
         {
             Expression = expression;
         }

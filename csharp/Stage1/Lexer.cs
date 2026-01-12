@@ -139,6 +139,7 @@ namespace MidLang.Stage1
             {
                 "var" => TokenType.VAR,
                 "print" => TokenType.PRINT,
+                "println" => TokenType.PRINTLN,
                 "inputInt" => TokenType.INPUT_INT,
                 _ => TokenType.IDENTIFIER
             };

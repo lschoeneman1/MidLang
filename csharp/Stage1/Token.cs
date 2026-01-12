@@ -46,6 +46,7 @@ namespace MidLang.Stage1
         // Keywords
         VAR,            // var
         PRINT,          // print
+        PRINTLN,        // println
         INPUT_INT,      // inputInt
 
         // Special

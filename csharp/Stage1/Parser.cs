@@ -50,8 +50,8 @@ namespace MidLang.Stage1
         }
 
         /// <summary>
-        /// Parses a statement (var declaration, assignment, or print).
-        /// Statement = VarDeclarationStatement | AssignmentStatement | PrintStatement
+        /// Parses a statement (var declaration, assignment, print, or println).
+        /// Statement = VarDeclarationStatement | AssignmentStatement | PrintStatement | PrintLineStatement
         /// </summary>
         private Statement ParseStatement()
         {
@@ -62,6 +62,10 @@ namespace MidLang.Stage1
             else if (Match(TokenType.PRINT))
             {
                 return ParsePrintStatement();
+            }
+            else if (Match(TokenType.PRINTLN))
+            {
+                return ParsePrintLineStatement();
             }
             else
             {

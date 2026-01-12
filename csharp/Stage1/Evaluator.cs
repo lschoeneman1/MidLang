@@ -34,7 +34,7 @@ namespace MidLang.Stage1
         }
 
         /// <summary>
-        /// Evaluates a statement (var declaration, assignment, or print).
+        /// Evaluates a statement (var declaration, assignment, print, or println).
         /// </summary>
         private void EvaluateStatement(Statement statement)
         {
@@ -50,6 +50,10 @@ namespace MidLang.Stage1
 
                 case PrintStatement print:
                     EvaluatePrint(print);
+                    break;
+
+                case PrintLineStatement println:
+                    EvaluatePrintLine(println);
                     break;
 
                 default:
@@ -76,11 +80,20 @@ namespace MidLang.Stage1
         }
 
         /// <summary>
-        /// Executes a print statement: evaluates the expression and outputs the result.
+        /// Executes a print statement: evaluates the expression and outputs the result (no newline).
         /// </summary>
         private void EvaluatePrint(PrintStatement print)
         {
             int value = EvaluateExpression(print.Expression);
+            Console.Write(value);
+        }
+
+        /// <summary>
+        /// Executes a println statement: evaluates the expression and outputs the result with a newline.
+        /// </summary>
+        private void EvaluatePrintLine(PrintLineStatement println)
+        {
+            int value = EvaluateExpression(println.Expression);
             Console.WriteLine(value);
         }
 
