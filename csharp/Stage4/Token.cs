@@ -60,6 +60,7 @@ namespace MidLang.Stage4
         INPUT_INT,      // inputInt
         IF,             // if
         ELSE,           // else
+        WHILE,          // while
 
         // Special
         EOF,            // End of file
