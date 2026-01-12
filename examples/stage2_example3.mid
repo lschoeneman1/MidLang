@@ -1,0 +1,8 @@
+first = "John";
+last = "Doe";
+fullName = first + " " + last;
+print fullName;
+age = 25;
+info = "Name: " + fullName + ", Age: " + age;
+print info;
+

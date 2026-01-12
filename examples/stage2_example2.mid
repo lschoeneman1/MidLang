@@ -1,0 +1,7 @@
+letter = 'A';
+print letter;
+message = "The answer is " + 42;
+print message;
+full = "Hello" + " " + "World";
+print full;
+

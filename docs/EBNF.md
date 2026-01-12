@@ -4,6 +4,56 @@ This document defines the formal grammar for MidLang using Extended Backus-Naur 
 
 ## Stage 1: Basic Integer Expressions
 
+[See Stage 1 section below for the original grammar]
+
+## Stage 2: Adding Strings and Characters
+
+Stage 2 extends Stage 1 with string and character literal support.
+
+### Additional Tokens for Stage 2
+
+```
+STRING      = '"' { ANY_CHAR_EXCEPT_DOUBLE_QUOTE | ESCAPE_SEQUENCE } '"'
+CHAR        = "'" ( ANY_CHAR_EXCEPT_SINGLE_QUOTE | ESCAPE_SEQUENCE ) "'"
+ESCAPE_SEQUENCE = "\\" ( "n" | "t" | "\\" | '"' | "'" )
+```
+
+### Updated Grammar Rules for Stage 2
+
+```
+Factor      = INTEGER
+            | STRING
+            | CHAR
+            | Identifier
+            | "(" Expression ")"
+```
+
+### String Operations
+
+- **Concatenation**: Strings can be concatenated using the `+` operator
+- **Type Mixing**: Integer + String converts integer to string and concatenates
+- **Character Access**: Characters are single-character strings
+
+### Examples for Stage 2
+
+```
+name = "Alice";
+print name;
+
+greeting = "Hello, " + name;
+print greeting;
+
+letter = 'A';
+print letter;
+
+message = "The answer is " + 42;
+print message;
+```
+
+---
+
+## Stage 1: Basic Integer Expressions
+
 ### Tokens (Terminal Symbols)
 
 ```
