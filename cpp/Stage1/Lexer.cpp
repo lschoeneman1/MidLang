@@ -85,7 +85,16 @@ Token Lexer::readIdentifier() {
     std::string value = identifier.str();
 
     // Check if it's a keyword
-    TokenType type = (value == "print") ? TokenType::PRINT : TokenType::IDENTIFIER;
+    TokenType type;
+    if (value == "var") {
+        type = TokenType::VAR;
+    } else if (value == "print") {
+        type = TokenType::PRINT;
+    } else if (value == "inputInt") {
+        type = TokenType::INPUT_INT;
+    } else {
+        type = TokenType::IDENTIFIER;
+    }
 
     return Token(type, value, line, startColumn);
 }

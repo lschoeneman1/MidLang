@@ -58,7 +58,9 @@ int main(int argc, char* argv[]) {
                     case TokenType::SEMICOLON: typeStr = "SEMICOLON"; break;
                     case TokenType::LEFT_PAREN: typeStr = "LEFT_PAREN"; break;
                     case TokenType::RIGHT_PAREN: typeStr = "RIGHT_PAREN"; break;
+                    case TokenType::VAR: typeStr = "VAR"; break;
                     case TokenType::PRINT: typeStr = "PRINT"; break;
+                    case TokenType::INPUT_INT: typeStr = "INPUT_INT"; break;
                     default: typeStr = "UNKNOWN"; break;
                 }
                 std::cout << "  " << typeStr << "(" << token.value << ")" << std::endl;

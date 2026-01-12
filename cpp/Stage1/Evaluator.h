@@ -24,9 +24,11 @@ private:
 
     // Helper methods
     void evaluateStatement(Statement* statement);
+    void evaluateVarDeclaration(VarDeclarationStatement* varDecl);
     void evaluateAssignment(AssignmentStatement* assign);
     void evaluatePrint(PrintStatement* print);
     int evaluateExpression(Expression* expression);
+    int evaluateInputInt();
     int evaluateVariable(VariableReference* varRef);
     int evaluateBinaryExpression(BinaryExpression* binExpr);
 

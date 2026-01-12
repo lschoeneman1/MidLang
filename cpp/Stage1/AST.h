@@ -34,6 +34,18 @@ public:
 };
 
 /**
+ * Variable declaration statement: var identifier = expression;
+ */
+class VarDeclarationStatement : public Statement {
+public:
+    std::string variableName;
+    std::unique_ptr<Expression> expression;
+
+    VarDeclarationStatement(const std::string& name, std::unique_ptr<Expression> expr)
+        : variableName(name), expression(std::move(expr)) {}
+};
+
+/**
  * Assignment statement: identifier = expression;
  */
 class AssignmentStatement : public Statement {
@@ -46,7 +58,7 @@ public:
 };
 
 /**
- * Print statement: print expression;
+ * Print statement: print(expression);
  */
 class PrintStatement : public Statement {
 public:
@@ -96,6 +108,15 @@ public:
 
     BinaryExpression(std::unique_ptr<Expression> l, const std::string& o, std::unique_ptr<Expression> r)
         : left(std::move(l)), op(o), right(std::move(r)) {}
+};
+
+/**
+ * Input expression: inputInt()
+ * Reads an integer from the console.
+ */
+class InputIntExpression : public Expression {
+public:
+    InputIntExpression() {}
 };
 
 #endif // AST_H

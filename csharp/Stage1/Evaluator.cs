@@ -34,12 +34,16 @@ namespace MidLang.Stage1
         }
 
         /// <summary>
-        /// Evaluates a statement (assignment or print).
+        /// Evaluates a statement (var declaration, assignment, or print).
         /// </summary>
         private void EvaluateStatement(Statement statement)
         {
             switch (statement)
             {
+                case VarDeclarationStatement varDecl:
+                    EvaluateVarDeclaration(varDecl);
+                    break;
+
                 case AssignmentStatement assign:
                     EvaluateAssignment(assign);
                     break;
@@ -51,6 +55,15 @@ namespace MidLang.Stage1
                 default:
                     throw new Exception($"Unknown statement type: {statement.GetType()}");
             }
+        }
+
+        /// <summary>
+        /// Executes a variable declaration: stores the expression's value in the variable.
+        /// </summary>
+        private void EvaluateVarDeclaration(VarDeclarationStatement varDecl)
+        {
+            int value = EvaluateExpression(varDecl.Expression);
+            _symbolTable[varDecl.VariableName] = value;
         }
 
         /// <summary>
@@ -79,10 +92,24 @@ namespace MidLang.Stage1
             return expression switch
             {
                 IntegerLiteral lit => lit.Value,
+                InputIntExpression input => EvaluateInputInt(),
                 VariableReference varRef => EvaluateVariable(varRef),
                 BinaryExpression binExpr => EvaluateBinaryExpression(binExpr),
                 _ => throw new Exception($"Unknown expression type: {expression.GetType()}")
             };
+        }
+
+        /// <summary>
+        /// Evaluates an inputInt() expression: reads an integer from the console.
+        /// </summary>
+        private int EvaluateInputInt()
+        {
+            string input = Console.ReadLine() ?? "";
+            if (int.TryParse(input, out int value))
+            {
+                return value;
+            }
+            throw new Exception($"Invalid integer input: '{input}'");
         }
 
         /// <summary>

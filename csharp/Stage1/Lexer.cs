@@ -137,7 +137,9 @@ namespace MidLang.Stage1
             // Check if it's a keyword
             TokenType type = value switch
             {
+                "var" => TokenType.VAR,
                 "print" => TokenType.PRINT,
+                "inputInt" => TokenType.INPUT_INT,
                 _ => TokenType.IDENTIFIER
             };
 

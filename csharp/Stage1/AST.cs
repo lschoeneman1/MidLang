@@ -28,6 +28,21 @@ namespace MidLang.Stage1
     }
 
     /// <summary>
+    /// Variable declaration statement: var identifier = expression;
+    /// </summary>
+    public class VarDeclarationStatement : Statement
+    {
+        public string VariableName { get; }
+        public Expression Expression { get; }
+
+        public VarDeclarationStatement(string variableName, Expression expression)
+        {
+            VariableName = variableName;
+            Expression = expression;
+        }
+    }
+
+    /// <summary>
     /// Assignment statement: identifier = expression;
     /// </summary>
     public class AssignmentStatement : Statement
@@ -43,7 +58,7 @@ namespace MidLang.Stage1
     }
 
     /// <summary>
-    /// Print statement: print expression;
+    /// Print statement: print(expression);
     /// </summary>
     public class PrintStatement : Statement
     {
@@ -103,6 +118,17 @@ namespace MidLang.Stage1
             Left = left;
             Operator = op;
             Right = right;
+        }
+    }
+
+    /// <summary>
+    /// Input expression: inputInt()
+    /// Reads an integer from the console.
+    /// </summary>
+    public class InputIntExpression : Expression
+    {
+        public InputIntExpression()
+        {
         }
     }
 }

@@ -43,6 +43,7 @@ private:
 
     // Parsing methods
     std::unique_ptr<Statement> parseStatement();
+    std::unique_ptr<VarDeclarationStatement> parseVarDeclaration();
     std::unique_ptr<AssignmentStatement> parseAssignmentStatement();
     std::unique_ptr<PrintStatement> parsePrintStatement();
     std::unique_ptr<Expression> parseExpression();

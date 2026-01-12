@@ -50,12 +50,16 @@ namespace MidLang.Stage1
         }
 
         /// <summary>
-        /// Parses a statement (assignment or print).
-        /// Statement = AssignmentStatement | PrintStatement
+        /// Parses a statement (var declaration, assignment, or print).
+        /// Statement = VarDeclarationStatement | AssignmentStatement | PrintStatement
         /// </summary>
         private Statement ParseStatement()
         {
-            if (Match(TokenType.PRINT))
+            if (Match(TokenType.VAR))
+            {
+                return ParseVarDeclaration();
+            }
+            else if (Match(TokenType.PRINT))
             {
                 return ParsePrintStatement();
             }
@@ -63,6 +67,20 @@ namespace MidLang.Stage1
             {
                 return ParseAssignmentStatement();
             }
+        }
+
+        /// <summary>
+        /// Parses a variable declaration: var identifier = expression;
+        /// VarDeclarationStatement = VAR Identifier ASSIGN Expression SEMICOLON
+        /// </summary>
+        private VarDeclarationStatement ParseVarDeclaration()
+        {
+            Token identifier = Consume(TokenType.IDENTIFIER, "Expected variable name after 'var'");
+            Consume(TokenType.ASSIGN, "Expected '=' after variable name");
+            Expression expression = ParseExpression();
+            Consume(TokenType.SEMICOLON, "Expected ';' after expression");
+
+            return new VarDeclarationStatement(identifier.Value, expression);
         }
 
         /// <summary>
@@ -80,13 +98,15 @@ namespace MidLang.Stage1
         }
 
         /// <summary>
-        /// Parses a print statement: print expression;
-        /// PrintStatement = PRINT Expression SEMICOLON
+        /// Parses a print statement: print(expression);
+        /// PrintStatement = PRINT LEFT_PAREN Expression RIGHT_PAREN SEMICOLON
         /// </summary>
         private PrintStatement ParsePrintStatement()
         {
+            Consume(TokenType.LEFT_PAREN, "Expected '(' after 'print'");
             Expression expression = ParseExpression();
-            Consume(TokenType.SEMICOLON, "Expected ';' after expression");
+            Consume(TokenType.RIGHT_PAREN, "Expected ')' after expression");
+            Consume(TokenType.SEMICOLON, "Expected ';' after ')'");
 
             return new PrintStatement(expression);
         }
@@ -131,7 +151,7 @@ namespace MidLang.Stage1
 
         /// <summary>
         /// Parses a factor (lowest level of expression).
-        /// Factor = INTEGER | Identifier | "(" Expression ")"
+        /// Factor = INTEGER | Identifier | "(" Expression ")" | INPUT_INT "()"
         /// </summary>
         private Expression ParseFactor()
         {
@@ -139,6 +159,13 @@ namespace MidLang.Stage1
             {
                 int value = int.Parse(Previous().Value);
                 return new IntegerLiteral(value);
+            }
+
+            if (Match(TokenType.INPUT_INT))
+            {
+                Consume(TokenType.LEFT_PAREN, "Expected '(' after 'inputInt'");
+                Consume(TokenType.RIGHT_PAREN, "Expected ')' after '('");
+                return new InputIntExpression();
             }
 
             if (Match(TokenType.IDENTIFIER))

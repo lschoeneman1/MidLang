@@ -44,7 +44,9 @@ namespace MidLang.Stage1
         RIGHT_PAREN,    // )
 
         // Keywords
+        VAR,            // var
         PRINT,          // print
+        INPUT_INT,      // inputInt
 
         // Special
         EOF,            // End of file
