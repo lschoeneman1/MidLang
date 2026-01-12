@@ -71,10 +71,39 @@ namespace MidLang.Stage1
                 case '-': return CreateToken(TokenType.MINUS);
                 case '*': return CreateToken(TokenType.MULTIPLY);
                 case '/': return CreateToken(TokenType.DIVIDE);
-                case '=': return CreateToken(TokenType.ASSIGN);
+                case '=':
+                    if (Peek() == '=')
+                    {
+                        Advance(); // consume the second '='
+                        return new Token(TokenType.EQUAL_EQUAL, "==", _line, _column - 1);
+                    }
+                    return CreateToken(TokenType.ASSIGN);
+                case '!':
+                    if (Peek() == '=')
+                    {
+                        Advance(); // consume the '='
+                        return new Token(TokenType.NOT_EQUAL, "!=", _line, _column - 1);
+                    }
+                    return new Token(TokenType.UNKNOWN, current.ToString(), _line, _column);
+                case '<':
+                    if (Peek() == '=')
+                    {
+                        Advance(); // consume the '='
+                        return new Token(TokenType.LESS_EQUAL, "<=", _line, _column - 1);
+                    }
+                    return CreateToken(TokenType.LESS);
+                case '>':
+                    if (Peek() == '=')
+                    {
+                        Advance(); // consume the '='
+                        return new Token(TokenType.GREATER_EQUAL, ">=", _line, _column - 1);
+                    }
+                    return CreateToken(TokenType.GREATER);
                 case ';': return CreateToken(TokenType.SEMICOLON);
                 case '(': return CreateToken(TokenType.LEFT_PAREN);
                 case ')': return CreateToken(TokenType.RIGHT_PAREN);
+                case '{': return CreateToken(TokenType.LEFT_BRACE);
+                case '}': return CreateToken(TokenType.RIGHT_BRACE);
             }
 
             // Numbers (integers)
@@ -141,6 +170,8 @@ namespace MidLang.Stage1
                 "print" => TokenType.PRINT,
                 "println" => TokenType.PRINTLN,
                 "inputInt" => TokenType.INPUT_INT,
+                "if" => TokenType.IF,
+                "else" => TokenType.ELSE,
                 _ => TokenType.IDENTIFIER
             };
 

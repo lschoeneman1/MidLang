@@ -89,3 +89,82 @@ x = 5 +;        // Incomplete expression
 x = -10;        // Unary minus not supported in Stage 1
 ```
 
+---
+
+## Stage 3: If/Else Statements
+
+### Additional Tokens
+
+```
+IF            = "if"
+ELSE          = "else"
+LEFT_BRACE    = "{"
+RIGHT_BRACE   = "}"
+EQUAL_EQUAL   = "=="
+NOT_EQUAL     = "!="
+LESS          = "<"
+GREATER       = ">"
+LESS_EQUAL    = "<="
+GREATER_EQUAL = ">="
+```
+
+### Additional Grammar Rules
+
+```
+Statement   = AssignmentStatement
+            | PrintStatement
+            | PrintLineStatement
+            | VarDeclarationStatement
+            | IfStatement
+
+IfStatement = IF LEFT_PAREN BooleanExpression RIGHT_PAREN LEFT_BRACE Statement { Statement } RIGHT_BRACE [ ELSE LEFT_BRACE Statement { Statement } RIGHT_BRACE ]
+
+BooleanExpression = Expression ComparisonOperator Expression
+
+ComparisonOperator = EQUAL_EQUAL      // ==
+                   | NOT_EQUAL        // !=
+                   | LESS             // <
+                   | GREATER          // >
+                   | LESS_EQUAL       // <=
+                   | GREATER_EQUAL    // >=
+```
+
+### Notes
+
+- **If Statement**: The condition must be a boolean expression (comparison between two expressions).
+- **Else Clause**: Optional. If present, executes when the condition is false.
+- **Block Statements**: Multiple statements can be grouped in braces `{}`.
+- **Comparison Operators**: All comparison operators return a boolean value (true/false represented as 1/0 internally).
+
+### Examples
+
+**Valid Programs:**
+```
+var x = 10;
+if (x > 5) {
+    print("x is greater than 5");
+}
+
+var y = 3;
+if (y == 3) {
+    print("y equals 3");
+} else {
+    print("y does not equal 3");
+}
+
+var a = 10;
+var b = 20;
+if (a < b) {
+    print("a is less than b");
+} else {
+    print("a is not less than b");
+}
+```
+
+**Invalid Programs:**
+```
+if (x) { }              // Condition must be a comparison, not just a variable
+if x > 5 { }            // Missing parentheses around condition
+if (x > 5) print(x);    // Missing braces (single statement requires braces)
+```
+

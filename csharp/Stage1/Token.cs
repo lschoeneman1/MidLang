@@ -36,18 +36,30 @@ namespace MidLang.Stage1
         MINUS,          // -
         MULTIPLY,       // *
         DIVIDE,         // /
+        
+        // Comparison Operators
+        EQUAL_EQUAL,    // ==
+        NOT_EQUAL,      // !=
+        LESS,           // <
+        GREATER,        // >
+        LESS_EQUAL,     // <=
+        GREATER_EQUAL,  // >=
 
         // Punctuation
         ASSIGN,         // =
         SEMICOLON,      // ;
         LEFT_PAREN,     // (
         RIGHT_PAREN,    // )
+        LEFT_BRACE,     // {
+        RIGHT_BRACE,    // }
 
         // Keywords
         VAR,            // var
         PRINT,          // print
         PRINTLN,        // println
         INPUT_INT,      // inputInt
+        IF,             // if
+        ELSE,           // else
 
         // Special
         EOF,            // End of file

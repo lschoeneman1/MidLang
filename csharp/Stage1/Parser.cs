@@ -50,8 +50,8 @@ namespace MidLang.Stage1
         }
 
         /// <summary>
-        /// Parses a statement (var declaration, assignment, print, or println).
-        /// Statement = VarDeclarationStatement | AssignmentStatement | PrintStatement | PrintLineStatement
+        /// Parses a statement (var declaration, assignment, print, println, or if).
+        /// Statement = VarDeclarationStatement | AssignmentStatement | PrintStatement | PrintLineStatement | IfStatement
         /// </summary>
         private Statement ParseStatement()
         {
@@ -66,6 +66,10 @@ namespace MidLang.Stage1
             else if (Match(TokenType.PRINTLN))
             {
                 return ParsePrintLineStatement();
+            }
+            else if (Match(TokenType.IF))
+            {
+                return ParseIfStatement();
             }
             else
             {
@@ -127,6 +131,61 @@ namespace MidLang.Stage1
             Consume(TokenType.SEMICOLON, "Expected ';' after ')'");
 
             return new PrintLineStatement(expression);
+        }
+
+        /// <summary>
+        /// Parses an if statement: if (condition) { statements } [ else { statements } ]
+        /// IfStatement = IF LEFT_PAREN BooleanExpression RIGHT_PAREN LEFT_BRACE Statement { Statement } RIGHT_BRACE [ ELSE LEFT_BRACE Statement { Statement } RIGHT_BRACE ]
+        /// </summary>
+        private IfStatement ParseIfStatement()
+        {
+            Consume(TokenType.LEFT_PAREN, "Expected '(' after 'if'");
+            BooleanExpression condition = ParseBooleanExpression();
+            Consume(TokenType.RIGHT_PAREN, "Expected ')' after condition");
+            Consume(TokenType.LEFT_BRACE, "Expected '{' after ')'");
+
+            // Parse then block
+            var thenStatements = new List<Statement>();
+            while (!Check(TokenType.RIGHT_BRACE) && !IsAtEnd())
+            {
+                thenStatements.Add(ParseStatement());
+            }
+            Consume(TokenType.RIGHT_BRACE, "Expected '}' after if block");
+
+            // Parse optional else block
+            List<Statement> elseStatements = null;
+            if (Match(TokenType.ELSE))
+            {
+                Consume(TokenType.LEFT_BRACE, "Expected '{' after 'else'");
+                elseStatements = new List<Statement>();
+                while (!Check(TokenType.RIGHT_BRACE) && !IsAtEnd())
+                {
+                    elseStatements.Add(ParseStatement());
+                }
+                Consume(TokenType.RIGHT_BRACE, "Expected '}' after else block");
+            }
+
+            return new IfStatement(condition, thenStatements, elseStatements);
+        }
+
+        /// <summary>
+        /// Parses a boolean expression: expression comparisonOperator expression
+        /// BooleanExpression = Expression ComparisonOperator Expression
+        /// </summary>
+        private BooleanExpression ParseBooleanExpression()
+        {
+            Expression left = ParseExpression();
+
+            // Check for comparison operator
+            if (!Match(TokenType.EQUAL_EQUAL, TokenType.NOT_EQUAL, TokenType.LESS, TokenType.GREATER, TokenType.LESS_EQUAL, TokenType.GREATER_EQUAL))
+            {
+                throw new Exception($"Expected comparison operator (==, !=, <, >, <=, >=) at line {Peek().Line}, column {Peek().Column}");
+            }
+
+            string op = Previous().Value;
+            Expression right = ParseExpression();
+
+            return new BooleanExpression(left, op, right);
         }
 
         /// <summary>

@@ -34,7 +34,7 @@ namespace MidLang.Stage1
         }
 
         /// <summary>
-        /// Evaluates a statement (var declaration, assignment, print, or println).
+        /// Evaluates a statement (var declaration, assignment, print, println, or if).
         /// </summary>
         private void EvaluateStatement(Statement statement)
         {
@@ -54,6 +54,10 @@ namespace MidLang.Stage1
 
                 case PrintLineStatement println:
                     EvaluatePrintLine(println);
+                    break;
+
+                case IfStatement ifStmt:
+                    EvaluateIfStatement(ifStmt);
                     break;
 
                 default:
@@ -108,8 +112,54 @@ namespace MidLang.Stage1
                 InputIntExpression input => EvaluateInputInt(),
                 VariableReference varRef => EvaluateVariable(varRef),
                 BinaryExpression binExpr => EvaluateBinaryExpression(binExpr),
+                BooleanExpression boolExpr => EvaluateBooleanExpression(boolExpr) ? 1 : 0,
                 _ => throw new Exception($"Unknown expression type: {expression.GetType()}")
             };
+        }
+
+        /// <summary>
+        /// Evaluates a boolean expression and returns true or false.
+        /// </summary>
+        private bool EvaluateBooleanExpression(BooleanExpression boolExpr)
+        {
+            int left = EvaluateExpression(boolExpr.Left);
+            int right = EvaluateExpression(boolExpr.Right);
+
+            return boolExpr.Operator switch
+            {
+                "==" => left == right,
+                "!=" => left != right,
+                "<" => left < right,
+                ">" => left > right,
+                "<=" => left <= right,
+                ">=" => left >= right,
+                _ => throw new Exception($"Unknown comparison operator: {boolExpr.Operator}")
+            };
+        }
+
+        /// <summary>
+        /// Executes an if statement: evaluates the condition and executes the appropriate block.
+        /// </summary>
+        private void EvaluateIfStatement(IfStatement ifStmt)
+        {
+            bool condition = EvaluateBooleanExpression(ifStmt.Condition);
+            
+            if (condition)
+            {
+                // Execute then block
+                foreach (Statement stmt in ifStmt.ThenStatements)
+                {
+                    EvaluateStatement(stmt);
+                }
+            }
+            else if (ifStmt.ElseStatements != null)
+            {
+                // Execute else block
+                foreach (Statement stmt in ifStmt.ElseStatements)
+                {
+                    EvaluateStatement(stmt);
+                }
+            }
         }
 
         /// <summary>

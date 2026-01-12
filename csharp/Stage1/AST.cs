@@ -144,5 +144,40 @@ namespace MidLang.Stage1
         {
         }
     }
+
+    /// <summary>
+    /// Boolean expression: left comparisonOperator right
+    /// Examples: x == 5, a < b, y >= 10
+    /// </summary>
+    public class BooleanExpression : Expression
+    {
+        public Expression Left { get; }
+        public string Operator { get; }  // "==", "!=", "<", ">", "<=", ">="
+        public Expression Right { get; }
+
+        public BooleanExpression(Expression left, string op, Expression right)
+        {
+            Left = left;
+            Operator = op;
+            Right = right;
+        }
+    }
+
+    /// <summary>
+    /// If statement: if (condition) { statements } [ else { statements } ]
+    /// </summary>
+    public class IfStatement : Statement
+    {
+        public BooleanExpression Condition { get; }
+        public List<Statement> ThenStatements { get; }
+        public List<Statement>? ElseStatements { get; }  // null if no else clause
+
+        public IfStatement(BooleanExpression condition, List<Statement> thenStatements, List<Statement>? elseStatements = null)
+        {
+            Condition = condition;
+            ThenStatements = thenStatements;
+            ElseStatements = elseStatements;
+        }
+    }
 }
 
