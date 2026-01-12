@@ -116,6 +116,20 @@ namespace MidLang.Stage1
         }
 
         /// <summary>
+        /// Parses a print line statement: println(expression);
+        /// PrintLineStatement = PRINTLN LEFT_PAREN Expression RIGHT_PAREN SEMICOLON
+        /// </summary>
+        private PrintLineStatement ParsePrintLineStatement()
+        {
+            Consume(TokenType.LEFT_PAREN, "Expected '(' after 'println'");
+            Expression expression = ParseExpression();
+            Consume(TokenType.RIGHT_PAREN, "Expected ')' after expression");
+            Consume(TokenType.SEMICOLON, "Expected ';' after ')'");
+
+            return new PrintLineStatement(expression);
+        }
+
+        /// <summary>
         /// Parses an expression.
         /// Expression = Term { ("+" | "-") Term }
         /// This handles addition and subtraction (lowest precedence).
