@@ -173,6 +173,28 @@ namespace MidLang.Stage4
         }
 
         /// <summary>
+        /// Parses a while statement: while (condition) { statements }
+        /// WhileStatement = WHILE LEFT_PAREN BooleanExpression RIGHT_PAREN LEFT_BRACE Statement { Statement } RIGHT_BRACE
+        /// </summary>
+        private WhileStatement ParseWhileStatement()
+        {
+            Consume(TokenType.LEFT_PAREN, "Expected '(' after 'while'");
+            BooleanExpression condition = ParseBooleanExpression();
+            Consume(TokenType.RIGHT_PAREN, "Expected ')' after condition");
+            Consume(TokenType.LEFT_BRACE, "Expected '{' after ')'");
+
+            // Parse body block
+            var bodyStatements = new List<Statement>();
+            while (!Check(TokenType.RIGHT_BRACE) && !IsAtEnd())
+            {
+                bodyStatements.Add(ParseStatement());
+            }
+            Consume(TokenType.RIGHT_BRACE, "Expected '}' after while block");
+
+            return new WhileStatement(condition, bodyStatements);
+        }
+
+        /// <summary>
         /// Parses a boolean expression: expression comparisonOperator expression
         /// BooleanExpression = Expression ComparisonOperator Expression
         /// </summary>
