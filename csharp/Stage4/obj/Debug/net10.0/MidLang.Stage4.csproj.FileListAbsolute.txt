@@ -1,0 +1,5 @@
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage4\obj\Debug\net10.0\MidLang.Stage4.GeneratedMSBuildEditorConfig.editorconfig
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage4\obj\Debug\net10.0\MidLang.Stage4.AssemblyInfoInputs.cache
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage4\obj\Debug\net10.0\MidLang.Stage4.AssemblyInfo.cs
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage4\obj\Debug\net10.0\MidLang.Stage4.csproj.CoreCompileInputs.cache
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage4\obj\Debug\net10.0\MidLang.Stage4.sourcelink.json

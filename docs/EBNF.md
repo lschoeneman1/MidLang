@@ -168,3 +168,65 @@ if x > 5 { }            // Missing parentheses around condition
 if (x > 5) print(x);    // Missing braces (single statement requires braces)
 ```
 
+---
+
+## Stage 4: While Loops
+
+### Additional Tokens
+
+```
+WHILE         = "while"
+```
+
+### Additional Grammar Rules
+
+```
+Statement   = AssignmentStatement
+            | PrintStatement
+            | PrintLineStatement
+            | VarDeclarationStatement
+            | IfStatement
+            | WhileStatement
+
+WhileStatement = WHILE LEFT_PAREN BooleanExpression RIGHT_PAREN LEFT_BRACE Statement { Statement } RIGHT_BRACE
+```
+
+### Notes
+
+- **While Loop**: Executes the block of statements repeatedly as long as the condition is true.
+- **Condition**: Must be a boolean expression (comparison between two expressions).
+- **Block Statements**: Multiple statements can be grouped in braces `{}`.
+- **Loop Control**: The condition is evaluated before each iteration. If false initially, the loop body never executes.
+
+### Examples
+
+**Valid Programs:**
+```
+var x = 0;
+while (x < 5) {
+    println(x);
+    x = x + 1;
+}
+
+var count = 10;
+while (count > 0) {
+    println(count);
+    count = count - 1;
+}
+
+var i = 1;
+var sum = 0;
+while (i <= 10) {
+    sum = sum + i;
+    i = i + 1;
+}
+println(sum);
+```
+
+**Invalid Programs:**
+```
+while (x) { }           // Condition must be a comparison, not just a variable
+while x < 5 { }         // Missing parentheses around condition
+while (x < 5) print(x); // Missing braces (single statement requires braces)
+```
+
