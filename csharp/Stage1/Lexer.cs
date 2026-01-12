@@ -158,8 +158,20 @@ namespace MidLang.Stage1
                 {
                     Advance();
                 }
+                else if (c == '\r')
+                {
+                    // Handle Windows line endings (\r\n)
+                    Advance();
+                    if (!IsAtEnd() && Peek() == '\n')
+                    {
+                        Advance(); // Skip the \n after \r
+                    }
+                    _line++;
+                    _column = 1;
+                }
                 else if (c == '\n')
                 {
+                    // Handle Unix line endings (\n)
                     Advance();
                     _line++;
                     _column = 1;

@@ -173,7 +173,16 @@ void Lexer::skipWhitespace() {
         char c = peek();
         if (c == ' ' || c == '\t') {
             advance();
+        } else if (c == '\r') {
+            // Handle Windows line endings (\r\n)
+            advance();
+            if (!isAtEnd() && peek() == '\n') {
+                advance(); // Skip the \n after \r
+            }
+            line++;
+            column = 1;
         } else if (c == '\n') {
+            // Handle Unix line endings (\n)
             advance();
             line++;
             column = 1;
