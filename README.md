@@ -63,4 +63,3 @@ The interpreter consists of three main stages:
 3. **Evaluator**: Executes the AST and produces output
 
 See `docs/Architecture.md` for detailed explanations.
-
