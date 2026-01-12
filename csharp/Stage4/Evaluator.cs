@@ -208,6 +208,21 @@ namespace MidLang.Stage4
                 _ => throw new Exception($"Unknown operator: {binExpr.Operator}")
             };
         }
+
+        /// <summary>
+        /// Executes a while statement: repeatedly executes the body as long as the condition is true.
+        /// </summary>
+        private void EvaluateWhileStatement(WhileStatement whileStmt)
+        {
+            while (EvaluateBooleanExpression(whileStmt.Condition))
+            {
+                // Execute body block
+                foreach (Statement stmt in whileStmt.BodyStatements)
+                {
+                    EvaluateStatement(stmt);
+                }
+            }
+        }
     }
 }
 
