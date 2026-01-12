@@ -7,7 +7,7 @@
 #include "Evaluator.h"
 
 /**
- * Main entry point for the MidLang Stage 3 interpreter.
+ * Main entry point for the MidLang Stage 1 interpreter.
  * 
  * This program demonstrates the three-stage interpreter architecture:
  * 1. Lexer: Converts source code to tokens
@@ -16,8 +16,8 @@
  */
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        std::cout << "Usage: midlang_stage3 <source_file.mid>" << std::endl;
-        std::cout << "Example: midlang_stage3 examples/program.mid" << std::endl;
+        std::cout << "Usage: interpreter <source_file.mid>" << std::endl;
+        std::cout << "Example: interpreter examples/program.mid" << std::endl;
         return 1;
     }
 

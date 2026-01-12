@@ -4,7 +4,7 @@ using System.IO;
 namespace MidLang.Stage3
 {
     /// <summary>
-    /// Main entry point for the MidLang Stage 3 interpreter.
+    /// Main entry point for the MidLang Stage 1 interpreter.
     /// 
     /// This program demonstrates the three-stage interpreter architecture:
     /// 1. Lexer: Converts source code to tokens
@@ -17,8 +17,8 @@ namespace MidLang.Stage3
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("Usage: MidLang.Stage3 <source_file.mid>");
-                Console.WriteLine("Example: MidLang.Stage3 examples/program.mid");
+                Console.WriteLine("Usage: MidLang.Stage1 <source_file.mid>");
+                Console.WriteLine("Example: MidLang.Stage1 examples/program.mid");
                 return;
             }
 

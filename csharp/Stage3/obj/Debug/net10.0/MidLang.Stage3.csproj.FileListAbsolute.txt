@@ -1,0 +1,15 @@
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\bin\Debug\net10.0\MidLang.Stage3.exe
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\bin\Debug\net10.0\MidLang.Stage3.deps.json
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\bin\Debug\net10.0\MidLang.Stage3.runtimeconfig.json
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\bin\Debug\net10.0\MidLang.Stage3.dll
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\bin\Debug\net10.0\MidLang.Stage3.pdb
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\obj\Debug\net10.0\MidLang.Stage3.GeneratedMSBuildEditorConfig.editorconfig
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\obj\Debug\net10.0\MidLang.Stage3.AssemblyInfoInputs.cache
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\obj\Debug\net10.0\MidLang.Stage3.AssemblyInfo.cs
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\obj\Debug\net10.0\MidLang.Stage3.csproj.CoreCompileInputs.cache
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\obj\Debug\net10.0\MidLang.Stage3.sourcelink.json
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\obj\Debug\net10.0\MidLang.Stage3.dll
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\obj\Debug\net10.0\refint\MidLang.Stage3.dll
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\obj\Debug\net10.0\MidLang.Stage3.pdb
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\obj\Debug\net10.0\MidLang.Stage3.genruntimeconfig.cache
+D:\Dropbox\Teaching\Harper\Compiler Seminar\MidLang\csharp\Stage3\obj\Debug\net10.0\ref\MidLang.Stage3.dll
