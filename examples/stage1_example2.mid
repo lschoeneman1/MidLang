@@ -1,5 +1,5 @@
-a = 5;
-b = 3;
-c = a + b * 2;
-print c;
+var a = 5;
+var b = 3;
+var c = a + b * 2;
+print(c);
 
