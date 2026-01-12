@@ -84,9 +84,11 @@ quote = "He said \"Hello\"";
 
 ## Implementation Notes
 
-- Uses `std::variant<int, std::string>` for value storage in the symbol table
+- Uses a simple `Value` class for value storage in the symbol table
+- The `Value` class has a type field (INT or STRING) and stores the appropriate value
 - Character literals are converted to single-character strings during evaluation
 - String concatenation automatically converts integers to strings
+- This approach is much simpler than using `std::variant` and easier for junior students to understand
 
 ## Example
 

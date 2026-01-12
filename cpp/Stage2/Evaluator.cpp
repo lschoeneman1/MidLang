@@ -20,22 +20,23 @@ void Evaluator::evaluateStatement(Statement* statement) {
 }
 
 void Evaluator::evaluateAssignment(AssignmentStatement* assign) {
-    auto value = evaluateExpression(assign->expression.get());
+    Value value = evaluateExpression(assign->expression.get());
     symbolTable[assign->variableName] = value;
 }
 
 void Evaluator::evaluatePrint(PrintStatement* print) {
-    auto value = evaluateExpression(print->expression.get());
-    std::cout << convertToString(value) << std::endl;
+    Value value = evaluateExpression(print->expression.get());
+    std::cout << value.toString() << std::endl;
 }
 
-std::variant<int, std::string> Evaluator::evaluateExpression(Expression* expression) {
+Value Evaluator::evaluateExpression(Expression* expression) {
     if (auto* lit = dynamic_cast<IntegerLiteral*>(expression)) {
-        return lit->value;
+        return Value(lit->value);
     } else if (auto* strLit = dynamic_cast<StringLiteral*>(expression)) {
-        return strLit->value;
+        return Value(strLit->value);
     } else if (auto* charLit = dynamic_cast<CharLiteral*>(expression)) {
-        return std::string(1, charLit->value); // Convert char to string
+        // Convert char to string
+        return Value(std::string(1, charLit->value));
     } else if (auto* varRef = dynamic_cast<VariableReference*>(expression)) {
         return evaluateVariable(varRef);
     } else if (auto* binExpr = dynamic_cast<BinaryExpression*>(expression)) {
@@ -45,7 +46,7 @@ std::variant<int, std::string> Evaluator::evaluateExpression(Expression* express
     }
 }
 
-std::variant<int, std::string> Evaluator::evaluateVariable(VariableReference* varRef) {
+Value Evaluator::evaluateVariable(VariableReference* varRef) {
     auto it = symbolTable.find(varRef->name);
     if (it == symbolTable.end()) {
         std::stringstream ss;
@@ -55,49 +56,40 @@ std::variant<int, std::string> Evaluator::evaluateVariable(VariableReference* va
     return it->second;
 }
 
-std::variant<int, std::string> Evaluator::evaluateBinaryExpression(BinaryExpression* binExpr) {
-    auto leftObj = evaluateExpression(binExpr->left.get());
-    auto rightObj = evaluateExpression(binExpr->right.get());
+Value Evaluator::evaluateBinaryExpression(BinaryExpression* binExpr) {
+    Value left = evaluateExpression(binExpr->left.get());
+    Value right = evaluateExpression(binExpr->right.get());
 
     // String concatenation
     if (binExpr->op == "+") {
-        std::string leftStr = convertToString(leftObj);
-        std::string rightStr = convertToString(rightObj);
-        return leftStr + rightStr;
+        std::string leftStr = left.toString();
+        std::string rightStr = right.toString();
+        return Value(leftStr + rightStr);
     }
 
     // For other operators, both operands must be integers
-    int left, right;
-    try {
-        left = std::get<int>(leftObj);
-        right = std::get<int>(rightObj);
-    } catch (const std::bad_variant_access&) {
+    if (!left.isInt() || !right.isInt()) {
         std::stringstream ss;
         ss << "Operator '" << binExpr->op << "' requires integer operands";
         throw std::runtime_error(ss.str());
     }
 
+    int leftInt = left.getInt();
+    int rightInt = right.getInt();
+
     if (binExpr->op == "-") {
-        return left - right;
+        return Value(leftInt - rightInt);
     } else if (binExpr->op == "*") {
-        return left * right;
+        return Value(leftInt * rightInt);
     } else if (binExpr->op == "/") {
-        if (right == 0) {
+        if (rightInt == 0) {
             throw std::runtime_error("Division by zero");
         }
-        return left / right;
+        return Value(leftInt / rightInt);
     } else {
         std::stringstream ss;
         ss << "Unknown operator: " << binExpr->op;
         throw std::runtime_error(ss.str());
-    }
-}
-
-std::string Evaluator::convertToString(const std::variant<int, std::string>& value) {
-    if (std::holds_alternative<int>(value)) {
-        return std::to_string(std::get<int>(value));
-    } else {
-        return std::get<std::string>(value);
     }
 }
 
