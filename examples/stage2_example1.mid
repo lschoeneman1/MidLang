@@ -1,5 +1,5 @@
-name = "Alice";
-print name;
-greeting = "Hello, " + name;
-print greeting;
+var name = "Alice";
+print(name);
+var greeting = "Hello, " + name;
+print(greeting);
 

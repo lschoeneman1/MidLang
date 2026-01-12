@@ -1,7 +1,7 @@
-letter = 'A';
-print letter;
-message = "The answer is " + 42;
-print message;
-full = "Hello" + " " + "World";
-print full;
+var letter = 'A';
+print(letter);
+var message = "The answer is " + 42;
+print(message);
+var full = "Hello" + " " + "World";
+print(full);
 

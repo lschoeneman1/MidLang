@@ -1,8 +1,8 @@
-first = "John";
-last = "Doe";
-fullName = first + " " + last;
-print fullName;
-age = 25;
-info = "Name: " + fullName + ", Age: " + age;
-print info;
+var first = "John";
+var last = "Doe";
+var fullName = first + " " + last;
+print(fullName);
+var age = 25;
+var info = "Name: " + fullName + ", Age: " + age;
+print(info);
 
