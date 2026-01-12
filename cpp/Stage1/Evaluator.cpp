@@ -10,13 +10,20 @@ void Evaluator::evaluate(ProgramNode* program) {
 }
 
 void Evaluator::evaluateStatement(Statement* statement) {
-    if (auto* assign = dynamic_cast<AssignmentStatement*>(statement)) {
+    if (auto* varDecl = dynamic_cast<VarDeclarationStatement*>(statement)) {
+        evaluateVarDeclaration(varDecl);
+    } else if (auto* assign = dynamic_cast<AssignmentStatement*>(statement)) {
         evaluateAssignment(assign);
     } else if (auto* print = dynamic_cast<PrintStatement*>(statement)) {
         evaluatePrint(print);
     } else {
         throw std::runtime_error("Unknown statement type");
     }
+}
+
+void Evaluator::evaluateVarDeclaration(VarDeclarationStatement* varDecl) {
+    int value = evaluateExpression(varDecl->expression.get());
+    symbolTable[varDecl->variableName] = value;
 }
 
 void Evaluator::evaluateAssignment(AssignmentStatement* assign) {
@@ -32,12 +39,24 @@ void Evaluator::evaluatePrint(PrintStatement* print) {
 int Evaluator::evaluateExpression(Expression* expression) {
     if (auto* lit = dynamic_cast<IntegerLiteral*>(expression)) {
         return lit->value;
+    } else if (auto* input = dynamic_cast<InputIntExpression*>(expression)) {
+        return evaluateInputInt();
     } else if (auto* varRef = dynamic_cast<VariableReference*>(expression)) {
         return evaluateVariable(varRef);
     } else if (auto* binExpr = dynamic_cast<BinaryExpression*>(expression)) {
         return evaluateBinaryExpression(binExpr);
     } else {
         throw std::runtime_error("Unknown expression type");
+    }
+}
+
+int Evaluator::evaluateInputInt() {
+    std::string input;
+    std::getline(std::cin, input);
+    try {
+        return std::stoi(input);
+    } catch (const std::exception&) {
+        throw std::runtime_error("Invalid integer input: " + input);
     }
 }
 

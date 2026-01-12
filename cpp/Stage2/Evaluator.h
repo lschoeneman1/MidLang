@@ -25,9 +25,12 @@ private:
 
     // Helper methods
     void evaluateStatement(Statement* statement);
+    void evaluateVarDeclaration(VarDeclarationStatement* varDecl);
     void evaluateAssignment(AssignmentStatement* assign);
     void evaluatePrint(PrintStatement* print);
     Value evaluateExpression(Expression* expression);
+    int evaluateInputInt();
+    std::string evaluateInputString();
     Value evaluateVariable(VariableReference* varRef);
     Value evaluateBinaryExpression(BinaryExpression* binExpr);
 

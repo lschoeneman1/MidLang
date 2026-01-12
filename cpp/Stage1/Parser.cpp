@@ -16,11 +16,22 @@ std::unique_ptr<ProgramNode> Parser::parse() {
 }
 
 std::unique_ptr<Statement> Parser::parseStatement() {
-    if (match(TokenType::PRINT)) {
+    if (match(TokenType::VAR)) {
+        return parseVarDeclaration();
+    } else if (match(TokenType::PRINT)) {
         return parsePrintStatement();
     } else {
         return parseAssignmentStatement();
     }
+}
+
+std::unique_ptr<VarDeclarationStatement> Parser::parseVarDeclaration() {
+    Token identifier = consume(TokenType::IDENTIFIER, "Expected variable name after 'var'");
+    consume(TokenType::ASSIGN, "Expected '=' after variable name");
+    auto expression = parseExpression();
+    consume(TokenType::SEMICOLON, "Expected ';' after expression");
+
+    return std::make_unique<VarDeclarationStatement>(identifier.value, std::move(expression));
 }
 
 std::unique_ptr<AssignmentStatement> Parser::parseAssignmentStatement() {
@@ -33,8 +44,10 @@ std::unique_ptr<AssignmentStatement> Parser::parseAssignmentStatement() {
 }
 
 std::unique_ptr<PrintStatement> Parser::parsePrintStatement() {
+    consume(TokenType::LEFT_PAREN, "Expected '(' after 'print'");
     auto expression = parseExpression();
-    consume(TokenType::SEMICOLON, "Expected ';' after expression");
+    consume(TokenType::RIGHT_PAREN, "Expected ')' after expression");
+    consume(TokenType::SEMICOLON, "Expected ';' after ')'");
 
     return std::make_unique<PrintStatement>(std::move(expression));
 }
@@ -67,6 +80,12 @@ std::unique_ptr<Expression> Parser::parseFactor() {
     if (match(TokenType::INTEGER)) {
         int value = std::stoi(previous().value);
         return std::make_unique<IntegerLiteral>(value);
+    }
+
+    if (match(TokenType::INPUT_INT)) {
+        consume(TokenType::LEFT_PAREN, "Expected '(' after 'inputInt'");
+        consume(TokenType::RIGHT_PAREN, "Expected ')' after '('");
+        return std::make_unique<InputIntExpression>();
     }
 
     if (match(TokenType::IDENTIFIER)) {

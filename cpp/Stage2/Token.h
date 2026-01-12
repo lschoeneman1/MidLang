@@ -27,7 +27,10 @@ enum class TokenType {
     RIGHT_PAREN,    // )
 
     // Keywords
+    VAR,            // var
     PRINT,          // print
+    INPUT_INT,      // inputInt
+    INPUT_STRING,   // inputString
 
     // Special
     EOF_TOKEN,      // End of file

@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "MidLang.Stage1/1.0.0": {
+        "runtime": {
+          "MidLang.Stage1.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MidLang.Stage1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
