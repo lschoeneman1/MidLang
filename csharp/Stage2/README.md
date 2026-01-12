@@ -34,7 +34,7 @@ dotnet build
 dotnet run ../../examples/stage2_example1.mid
 
 # Or after building
-dotnet bin/Debug/net6.0/MidLang.Stage2.dll ../../examples/stage2_example1.mid
+dotnet bin/Debug/net10.0/MidLang.Stage2.dll ../../examples/stage2_example1.mid
 ```
 
 ## New Features

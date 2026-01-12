@@ -3,7 +3,7 @@
 ## For C# Students
 
 ### Prerequisites
-- .NET 6.0 SDK or later installed
+- .NET 10.0 SDK or later installed
 - A text editor or IDE (Visual Studio, VS Code, Rider, etc.)
 
 ### Getting Started

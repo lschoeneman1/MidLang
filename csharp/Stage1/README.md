@@ -27,7 +27,7 @@ dotnet build
 dotnet run ../../examples/stage1_example1.mid
 
 # Or after building
-dotnet bin/Debug/net6.0/MidLang.Stage1.dll ../../examples/stage1_example1.mid
+dotnet bin/Debug/net10.0/MidLang.Stage1.dll ../../examples/stage1_example1.mid
 ```
 
 ## How It Works
